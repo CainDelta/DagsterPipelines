@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: braintree_data
+    description: "Braintree source data table updated daily"
+
+  - name: settlementresults
+    description: "Last 45 days of Settlement data "
+
+  - name: sltrans
+    description: "Last 45 days of ledger data"
+
+  - name : creditcard_rec_sltrans
+    description: "Final table which has settlements, ledger and braintree payments compared in one line against each other to spot mismatches"

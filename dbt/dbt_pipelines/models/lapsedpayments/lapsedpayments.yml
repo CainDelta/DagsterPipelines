@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: ledger
+    description: "The bennetts dbo ledger stripped down to essential columns"
+
+  - name: botchedpayments
+    description: "Genuine botched payments that exist in the ledger but do not exist in the Policies tables as transactions"
+
+  - name: botchedcorrection
+    description: "Add corrections related to the Botched Payments"
+
+  - name: lapsedpayments
+    description: "Combines all the the different permutations of lapsed payments into one table with additional underpayments"

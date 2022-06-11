@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: bennetts_mi
+    database: MI
+    schema: MISC
+    tables:
+      - name: aquotes
+        identifier: AQUOTES

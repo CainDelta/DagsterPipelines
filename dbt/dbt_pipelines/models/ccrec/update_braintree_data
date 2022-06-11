@@ -1,0 +1,23 @@
+Update  BRAINTREE_DATA
+set BRAINTREE_DATA.RiskID = x.RiskID
+from
+(select d.RowID, e.[BBIS Risk Key], COALESCE(d.[BBIS Risk Key],e.[BBIS Risk Key]) as RiskId from
+(select a.* ,b.[BBIS Risk Key],PolicyNumber = JSON_VALUE(Metadata,'$.PolicyNumber'), COALESCE(JSON_VALUE(Metadata,'$.PolicyNumber'),QuoteId) As Identifier from BRAINTREE_DATA a
+left join Quotes.V_Master_PQuotes b
+on a.QuoteId = b.[BBIS PQuote Key]) d
+left join
+(select distinct [BBIS Risk Key],[Policy Number] from Policies.V_Master_Policies) e
+on d.PolicyNumber = e.[Policy Number]) x
+LEFT JOIN BRAINTREE_DATA on BRAINTREE_DATA.RowID = x.RowID
+
+
+---UPDATE ROWS WITH NULL CLIENT ID DUE TO BBIS ISSUE (clicking back on website and not registering properly etc)
+update BRAINTREE_DATA
+set BRAINTREE_DATA.ClientId = d.Clientkey
+from
+(select transactionID,rowID,ClientId, coalesce(clientID,[BBIS Client Key]) as Clientkey from
+(select a.*, b.[BBIS Client Key]  from BRAINTREE_DATA a
+left join Quotes.V_Master_PQuotes b
+on a.RiskId = b.[BBIS Risk Key])c)d
+LEFT JOIN BRAINTREE_DATA on BRAINTREE_DATA.RowID = d.RowID
+where BRAINTREE_DATA.ClientId is null

@@ -1,0 +1,12 @@
+
+*.pyc
+/hacker_news
+/logging
+/jobs/adobe_feed.py
+credentials.py
+testing.py
+/dbt/localpackages
+/dbt/bennetts_mi
+/GC
+/dbt/servicetick
+movies

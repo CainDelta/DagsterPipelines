@@ -1,0 +1,28 @@
+
+-- {{ config({materialized:'table',
+--             schema:'Sitecore',
+--             alias:'Master_Events'}) }}
+
+{{ config(materialized='table',schema='Sitecore', alias='Master_Events') }}
+
+
+SELECT *
+FROM   (SELECT [event id],
+               [tracking type description],
+               [campaign id],
+               [message id],
+               [tracking datetime],
+               [bbis client key],
+               [campaign display label]
+        FROM   sitecore.v_events
+        WHERE  [loaded datetime] > '01 October 2020'
+               AND [bbis client key] NOT LIKE '%ANDY%') b
+GROUP  BY [tracking type description],
+          [message id],
+          [tracking datetime],
+          [bbis client key],
+          [event id],
+          [campaign id],
+          [campaign display label]
+ORDER  BY [message id],
+          [tracking datetime] DESC
